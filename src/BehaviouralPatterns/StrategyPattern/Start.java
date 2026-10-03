@@ -1,3 +1,5 @@
+package BehaviouralPatterns.StrategyPattern;
+
 interface PricingStrategy {
     double calculateFare(double km, int minutes);
 }
