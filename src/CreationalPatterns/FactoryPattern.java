@@ -1,40 +1,52 @@
 package CreationalPatterns;
 
 
-interface Notification{
-    void send();
+interface NotificationService{
+    void sendNotification();
 }
 
-// product
-class EmailNotification implements Notification{
+class EmailNotification implements  NotificationService{
 
-    public void send(){
-        System.out.println("Hey im a email Notification");
+    @Override
+    public void sendNotification() {
+        System.out.println("Sending a email notification ... ");
     }
 }
 
-// createrService
-class EmailService extends  NotificationService{
+class SMSNotification implements NotificationService{
 
-    public Notification createNotification() {
-        return new EmailNotification();
+    @Override
+    public void sendNotification() {
+        System.out.println("Sending a sms notification ... ");
     }
 }
 
-//creater
-abstract class NotificationService{
+class PushNotification implements NotificationService{
 
-    //factory method
-    abstract Notification createNotification();
-
+    @Override
+    public void sendNotification() {
+        System.out.println("Sending a push notification ... ");
+    }
 }
 
 
-public class FactoryPattern {
+class NotificationFactory{
 
-    public static void main(String[] args){
-        NotificationService notificationService = new EmailService();
-        notificationService.createNotification().send();
+    public static NotificationService create(String type) {
+        switch (type.toUpperCase()) {
+            case "EMAIL": return new EmailNotification();
+            case "SMS":   return new SMSNotification();
+            case "PUSH":  return new PushNotification();
+            default:
+                throw new IllegalArgumentException("Unknown notification type: " + type);
+        }
+    }
+}
 
+class FactoryPattern{
+
+    public  static void main(String[] args){
+        NotificationService n = NotificationFactory.create("SMS");
+        n.sendNotification();
     }
 }

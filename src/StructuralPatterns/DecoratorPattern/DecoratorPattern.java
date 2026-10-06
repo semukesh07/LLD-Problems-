@@ -24,11 +24,9 @@ class HypenText extends  TextSource{
     }
 }
 
-abstract  class TextDecorator extends  TextSource
+abstract  class TextDecorator
 {
-    TextSource textSource;
-
-    TextDecorator(TextSource textSource)
+    abstract String getText(String input);
 }
 
 class UpperCaseDecorator extends  TextDecorator {
@@ -45,21 +43,10 @@ class UpperCaseDecorator extends  TextDecorator {
     }
 }
 
-class TrimDecorator extends TextDecorator {
-
-    TextSource textSource;
-    super();
-
-    @Override
-    String getText(String input) {
-        return textSource.getText(input).trim();
-    }
-}
 
 class DecoratorPattern {
 
     static void main(String[] args){
-        System.out.println(new TrimDecorator(new UpperCaseDecorator(new PlainText())).getText("   mukesh  "));
         System.out.println(new UpperCaseDecorator(new HypenText()).getText("Mukesh  "));
     }
 
